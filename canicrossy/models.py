@@ -10,7 +10,8 @@ class Athlete(models.Model):
         YEAR_CHOICES.append((r,r))
     GENDER_CHOICES = [('F','F'), ('M','M')]
 
-    name = models.CharField('nom' , max_length=200)
+    first_name = models.CharField('prénom' , max_length=200)
+    last_name = models.CharField('nom' , max_length=200)
     birth_date = models.IntegerField('année naissance', choices=YEAR_CHOICES, default=1980)
     gender = models.CharField('sex', choices=GENDER_CHOICES, max_length=1, blank=True)
     dog_name = models.CharField('chien nom', max_length=200)
@@ -28,7 +29,7 @@ class Athlete(models.Model):
 class AthleteForm(ModelForm):
     class Meta:
         model = Athlete
-        fields = ['name', 'birth_date', 'dog_name']
+        fields = ['first_name', 'last_name', 'birth_date', 'dog_name']
 
 
 ## Race categories
