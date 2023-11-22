@@ -5,12 +5,15 @@ You need:
 - Poetry
 
 ```
-poetry install
 poetry shell
+poetry install
 python manage.py createsuperuser
 python manage.py makemigrations && python manage.py migrate
 ```
 
 ## Run:
 
-`poetry run python manage.py runserver`
+```
+poetry shell
+python manage.py runserver
+```
