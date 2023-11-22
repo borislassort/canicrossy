@@ -8,7 +8,7 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.10"
 flaskwebgui = "^1.0.8"
-django = "^4.2.6"
+django = "^4.2.7"
 waitress = "^2.1.2"
 
 
