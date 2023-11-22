@@ -14,7 +14,7 @@ admin.site.unregister(User)
 admin.site.unregister(Group)
 
 class AthleteAdmin(admin.ModelAdmin):
-    list_display = ('name', 'gender', 'dog_name', 'license', 'federation')
+    list_display = ('name', 'gender', 'dog_name', 'dog_race', 'license', 'federation')
     search_fields = ['name']
 admin.site.register(Athlete, AthleteAdmin)
 

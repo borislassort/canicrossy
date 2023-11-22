@@ -13,7 +13,8 @@ class Athlete(models.Model):
     name = models.CharField('nom' , max_length=200)
     birth_date = models.IntegerField('année naissance', choices=YEAR_CHOICES, default=1980)
     gender = models.CharField('sex', choices=GENDER_CHOICES, max_length=1, blank=True)
-    dog_name = models.CharField('chien', max_length=200)
+    dog_name = models.CharField('chien nom', max_length=200)
+    dog_race = models.CharField('chien race', max_length=200)
     license = models.CharField('num license', max_length=200)
     federation = models.ForeignKey('federation' , on_delete=models.CASCADE)
 
