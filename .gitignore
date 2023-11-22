@@ -88,6 +88,5 @@ local_settings.py
 db.sqlite3
 
 canicrossy/static/
-canicrossy/migrations/
 .vs/
 poetry.lock
