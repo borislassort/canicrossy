@@ -1,0 +1,188 @@
+{% extends 'admin/base_site.html' %}
+
+{% block content %}
+
+    <h1>{{ event.name }} - {{ event.date }}</h1>
+    {% for r in event.races %}
+
+    <h2 style="padding:1em">== {{ r.name }} ==</h2>
+    <h2>{{ r.name }} - classement Scratch</h2>
+    <table title="{{ r.name }} - Classement Scratch" style="width: 80%; margin-bottom: 10px;">
+        <thead>
+        <tr>
+		<td>Classement</td><td>Nom</td><td>Prénom</td><td>Sex</td><td>Fédé</td><td>License</td>
+            <td>Chien</td><td>Chien race</td><td>Chien ident</td><td>Dossard</td><td>Temps</td>
+        </tr>
+        </thead>
+        <tbody>
+            {% for p in r.participants.all|dictsort:"time_minus_delay_in_sec" %}
+            {% if p.time and p.category.name|slice:":1" == r.categories.first.name|slice:":1" %}
+                <tr>
+			<td></dt><td>{{ p.athlete.last_name }}</td><td>{{ p.athlete.first_name }}</td><td>{{ p.athlete.gender }}</td><td>{{ p.athlete.federation }}</td><td>{{ p.athlete.license }}</td>
+                <td>{{ p.dog.name }}</td><td>{{ p.dog.race }}</td><td>{{ p.dog.ident }}</td><td>{{ p.race_number }}</td><td>{{ p.time_minus_delay }}</td>
+                </tr>
+            {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+    <h2>{{ r.name }} - Scratch Femmes</h2>
+    <table title="{{ r.name }} - Classement Femme" style="width: 80%; margin-bottom: 10px;">
+        <thead>
+        <tr>
+            <td>Classement</td><td>Nom</td><td>Prénom</td>
+            <td>Chien</td><td>Dossard</td><td>Temps</td>
+        </tr>
+        </thead>
+        <tbody>
+            {% for p in r.participants.all|dictsort:"time_minus_delay_in_sec" %}
+            {% if p.time and p.category.name|slice:":1" == r.categories.first.name|slice:":1" and p.category.name|slice:"1:2" == "F" %}
+                <tr>
+                <td></dt><td>{{ p.athlete.last_name }}</td><td>{{ p.athlete.first_name }}</td>
+                <td>{{ p.dog.name }}</td><td>{{ p.race_number }}</td><td>{{ p.time_minus_delay }}</td>
+                </tr>
+            {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Femmes par catégorie --------------------------------------------------------------->
+    {% for cat in r.categories_with_participant %}
+    {% if cat.name|slice:"1:2" == "F" %}
+    <div style="padding-left: 3em;">
+    <h2>Catégorie - {{ cat }}</h2>
+    <table title="{{ r.name }} - {{ cat }}" style="width: 80%; margin-bottom: 10px;">
+        <thead>
+        <tr>
+            <td>Classement</td><td>Nom</td><td>Prénom</td>
+            <td>Chien</td><td>Dossard</td><td>Temps</td>
+        </tr>
+        </thead>
+        <tbody>
+            {% for p in r.participants.all|dictsort:"time_minus_delay_in_sec" %}
+            {% if p.time and p.category.name == cat.name and p.category.name|slice:"1:2" == "F" %}
+                <tr>
+                <td></dt><td>{{ p.athlete.last_name }}</td><td>{{ p.athlete.first_name }}</td>
+                <td>{{ p.dog.name }}</td><td>{{ p.race_number }}</td><td>{{ p.time_minus_delay }}</td>
+                </tr>
+            {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+    {% endif %}
+    {% endfor %}
+
+
+    <h2>{{ r.name }} - Scratch Hommes</h2>
+    <table title="{{ r.name }} - Classement Homme" style="width: 80%; margin-bottom: 10px;">
+        <thead>
+        <tr>
+            <td>Classement</td><td>Nom</td><td>Prénom</td>
+            <td>Chien</td><td>Dossard</td><td>Temps</td>
+        </tr>
+        </thead>
+        <tbody>
+            {% for p in r.participants.all|dictsort:"time_minus_delay_in_sec" %}
+            {% if p.time and p.category.name|slice:":1" == r.categories.first.name|slice:":1" and p.category.name|slice:"1:2" == "H" %}
+            <tr>
+            <td></dt><td>{{ p.athlete.last_name }}</td><td>{{ p.athlete.first_name }}</td>
+            <td>{{ p.dog.name }}</td><td>{{ p.race_number }}</td><td>{{ p.time_minus_delay }}</td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Hommes par catégorie ---------------------------------------------------->
+    {% for cat in r.categories_with_participant %}
+    {% if cat.name|slice:"1:2" == "H" %}
+    <div style="padding-left: 3em;">
+    <h2>Catégorie - {{ cat }}</h2>
+    <table title="{{ r.name }} - {{ cat }}" style="width: 80%; margin-bottom: 10px;">
+        <thead>
+        <tr>
+            <td>Classement</td><td>Nom</td><td>Prénom</td>
+            <td>Chien</td><td>Dossard</td><td>Temps</td>
+        </tr>
+        </thead>
+        <tbody>
+            {% for p in r.participants.all|dictsort:"time_minus_delay_in_sec" %}
+            {% if p.time and p.category.name == cat.name and p.category.name|slice:"1:2" == "H" %}
+                <tr>
+                <td></dt><td>{{ p.athlete.last_name }}</td><td>{{ p.athlete.first_name }}</td>
+                <td>{{ p.dog.name }}</td><td>{{ p.race_number }}</td><td>{{ p.time_minus_delay }}</td>
+                </tr>
+            {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+    {% endif %}
+    {% endfor %}
+
+
+    <h2>{{ r.name }} - Scratch Enfants</h2>
+    <table title="{{ r.name }} - Classement Enfants" style="width: 80%; margin-bottom: 10px;">
+        <thead>
+        <tr>
+            <td>Classement</td><td>Nom</td><td>Prénom</td>
+            <td>Chien</td><td>Dossard</td><td>Temps</td>
+        </tr>
+        </thead>
+        <tbody>
+            {% for p in r.participants.all|dictsort:"time_minus_delay_in_sec" %}
+            {% if p.time and p.category.name|slice:":1" == r.categories.first.name|slice:":1" and p.category.name|slice:"1:2" == "E" %}
+            <tr>
+            <td></dt><td>{{ p.athlete.last_name }}</td><td>{{ p.athlete.first_name }}</td>
+            <td>{{ p.dog.name }}</td><td>{{ p.race_number }}</td><td>{{ p.time_minus_delay }}</td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Enfants par catégorie ---------------------------------------------------->
+    {% for cat in r.categories_with_participant %}
+    {% if cat.name|slice:"1:2" == "E" %}
+    <div style="padding-left: 3em;">
+    <h2>Catégorie - {{ cat }}</h2>
+    <table title="{{ r.name }} - {{ cat }}" style="width: 80%; margin-bottom: 10px;">
+        <thead>
+        <tr>
+            <td>Classement</td><td>Nom</td><td>Prénom</td>
+            <td>Chien</td><td>Dossard</td><td>Temps</td>
+        </tr>
+        </thead>
+        <tbody>
+            {% for p in r.participants.all|dictsort:"time_minus_delay_in_sec" %}
+	    {% if p.time and p.category.name == cat.name and p.category.name|slice:"1:2" == "E" %}
+                <tr>
+                <td></dt><td>{{ p.athlete.last_name }}</td><td>{{ p.athlete.first_name }}</td>
+                <td>{{ p.dog.name }}</td><td>{{ p.race_number }}</td><td>{{ p.time_minus_delay }}</td>
+                </tr>
+            {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+    {% endif %}
+    {% endfor %}
+    <hr>
+
+    {% endfor %}
+
+
+<script>
+document.querySelectorAll('tbody').forEach((tb) => {
+    let i = 0;
+    for (var r = 0; r < tb.rows.length; r++) {
+        i++;
+        console.log(tb.rows[r]);
+        tb.rows[r].firstElementChild.innerText = i
+    }
+});
+</script>
+    
+{% endblock %}

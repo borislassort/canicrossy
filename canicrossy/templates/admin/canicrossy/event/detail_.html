@@ -1,0 +1,134 @@
+{% extends 'admin/base_site.html' %}
+
+{% block content %}
+
+    <h1>{{ event.races }}</h1>
+
+    <h1> Classement Scratch Cross - Hommes Femmes </h1>
+    <table title="Classement Global" style="width: 80%; margin-bottom: 10px;">
+        <thead>
+        <tr>
+            <td>Classement</td>
+            <td>Nom</td>
+            <td>prénom</td>
+            <td>Chien</td>
+            <td>Dossard</td>
+            <td>Temps</td>
+        </tr>
+        </thead>
+        <tbody>
+            {% for p in object.participants.all|dictsort:"time_minus_delay_in_sec" %}
+	        {% if p.time and p.category.name|slice:":1" == "C" %} %}
+                    <tr>
+                        <td class="incr"></dt>
+                        <td>{{ p.athlete.last_name }}</td>
+                        <td>{{ p.athlete.first_name }}</td>
+                        <td>{{ p.dog }}</td>
+                        <td>{{ p.event_number }}</td>
+                        <td>{{ p.time_minus_delay }}</td>
+                    </tr>
+		{% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h1> Classement Cross Femmes </h2> 
+    <table style="width: 80%; margin-bottom: 10px;">
+        <thead>
+        <tr>
+            <td>Classement</td>
+            <td>Nom</td>
+            <td>prénom</td>
+            <td>Chien</td>
+            <td>Dossard</td>
+            <td>Temps</td>
+        </tr>
+        </thead>
+        <tbody>
+            {% for p in object.participants.all|dictsort:"time_minus_delay_in_sec" %}
+                {% if p.time and p.category.name|slice:":2" == "CF" %}
+                    <tr>
+                        <td class="incr"></dt>
+                        <td>{{ p.athlete.last_name }}</td>
+                        <td>{{ p.athlete.first_name }}</td>
+                        <td>{{ p.dog }}</td>
+                        <td>{{ p.event_number }}</td>
+                        <td>{{ p.time_minus_delay }}</td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+    {% for cat in event.categories_with_participant %}
+    {% if cat|slice:":2" == "CF" %}
+        <h2>Classement Cross Femme Catégorie {{ cat }}</h2>
+        <table style="width: 80%; margin-bottom: 10px;">
+            <thead>
+            <tr>
+		<td>Classement</td>
+                <td>Nom</td>
+                <td>prénom</td>
+                <td>Chien</td>
+                <td>Dossard</td>
+                <td>Temps</td>
+            </tr>
+            </thead>
+            <tbody>
+                {% for p in object.participants.all|dictsort:"time_minus_delay_in_sec" %}
+                    {% if p.time and p.category == cat %}
+                        <tr>
+			    <td class="incr"></dt>
+                            <td>{{ p.athlete.last_name }}</td>
+                            <td>{{ p.athlete.first_name }}</td>
+                            <td>{{ p.dog }}</td>
+                            <td>{{ p.event_number }}</td>
+                            <td>{{ p.time_minus_delay }}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+    {% endfor %}
+
+
+    <h1> Classement Cross Homme</h2> 
+    <table style="width: 80%; margin-bottom: 10px;">
+        <thead>
+        <tr>
+            <td>Classement</td>
+            <td>Nom</td>
+            <td>prénom</td>
+            <td>Chien</td>
+            <td>Dossard</td>
+            <td>Temps</td>
+        </tr>
+        </thead>
+        <tbody>
+            {% for p in object.participants.all|dictsort:"time_minus_delay_in_sec" %}
+                {% if p.time and p.category.name|slice:":2" == "CH" %}
+                    <tr>
+                        <td class="incr"></dt>
+                        <td>{{ p.athlete.last_name }}</td>
+                        <td>{{ p.athlete.first_name }}</td>
+                        <td>{{ p.dog }}</td>
+                        <td>{{ p.event_number }}</td>
+                        <td>{{ p.time_minus_delay }}</td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+
+<script>
+document.querySelectorAll('tbody').forEach((tb) => {
+	let i = 0;
+	for (var r = 0; r < tb.rows.length; r++) {
+		i++;
+		console.log(tb.rows[r]);
+		tb.rows[r].firstElementChild.innerText = i
+	}
+});
+</script>
+    
+{% endblock %}
