@@ -17,4 +17,4 @@ def main():
     execute_from_command_line(["manage.py", "runserver", "--noreload"])
 
 if __name__ == "__main__":
-    run_server() 
+    main() 

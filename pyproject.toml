@@ -1,16 +1,17 @@
 [tool.poetry]
-name = "canicrossy-py"
+name = "canicrossy"
 version = "0.1.0"
 description = ""
-authors = ["Your Name <you@example.com>"]
+authors = ["Boris Lassort"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = ">=3.10,<3.13"
 flaskwebgui = "^1.0.8"
 django = "^4.2.7"
 waitress = "^2.1.2"
 numpy = "^1.26.2"
+pyinstaller = "^6.3.0"
 
 
 [build-system]

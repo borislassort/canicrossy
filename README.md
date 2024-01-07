@@ -7,8 +7,8 @@ You need:
 ```
 poetry shell
 poetry install
-python manage.py createsuperuser
 python manage.py makemigrations && python manage.py migrate
+python manage.py createsuperuser
 ```
 
 ## Run:
@@ -17,3 +17,12 @@ python manage.py makemigrations && python manage.py migrate
 poetry shell
 python manage.py runserver
 ```
+
+## Package to one executable:
+
+```
+pyinstaller --name=canicrossy --onefile --noconfirm start-app.py
+```
+
+
+
