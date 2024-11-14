@@ -6,7 +6,7 @@ authors = ["Boris Lassort"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = ">=3.10,<3.13"
+python = ">=3.10,<3.14"
 flaskwebgui = "^1.0.8"
 django = "^4.2.7"
 waitress = "^2.1.2"
