@@ -36,12 +36,36 @@ class ParticipantInline(admin.TabularInline):
     model = Participant
     search_fields = ["first_name"]
 
+class RaceCsvView(PermissionRequiredMixin, DetailView):
+    permission_required = "products.view_order"
+    template_name = "admin/canicrossy/race/csv.txt"
+    context_object_name = 'race'
+    model = Race
+    response = HttpResponse(
+        content_type="text/csv",
+        headers={"Content-Disposition": 'attachment; filename="somefilename.csv"'},
+    )
+
 class RaceAdmin(admin.ModelAdmin):
-    list_display = ('name', 'event')
+    list_display = ('name', 'event', 'csv')
     inlines = [
         ParticipantInline,
     ]
     search_fields = ['name', 'event__name']
+
+    def get_urls(self):
+        return [
+            path(
+                "<pk>/csv",
+                self.admin_site.admin_view(RaceCsvView.as_view()),
+                name=f"race_csv",
+            ),
+            *super().get_urls(),
+        ]
+    def csv(self, obj: Race) -> str:
+        url = reverse("admin:race_csv", args=[obj.pk])
+        return format_html(f'<a href="{url}">📝</a>')
+    
 admin.site.register(Race, RaceAdmin)
 
 class RaceInline(admin.TabularInline):
